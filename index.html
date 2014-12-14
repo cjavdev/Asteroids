@@ -4,7 +4,11 @@
     <title>Asteroids</title>
     <script src="./js/jquery-1.9.1.js"></script>
     <script src="./js/keymaster.js"></script>
+    <script src="./js/util.js"></script>
+    <script src="./js/moving_object.js"></script>
     <script src="./js/asteroid.js"></script>
+    <script src="./js/bullet.js"></script>
+    <script src="./js/ship.js"></script>
 
     <style type="text/css" media="screen">
       body {
@@ -14,8 +18,43 @@
         border: 1px dashed white;
       }
     </style>
-  </head>
+    <script>
+      $(function () {
+        var canvas = document.getElementById('space'),
+          context = canvas.getContext("2d");
 
+        canvas.width = $(window).width();
+        canvas.height = $(window).height();
+
+        $(window).resize(function () {
+          canvas.width = $(window).width();
+          canvas.height = $(window).height();
+          console.log("resizing" + canvas);
+        });
+
+        var game = new Asteroids.Game(context);
+
+        key('left', function () {
+          game.ship.power(-1, 0);
+        });
+        key('right', function () {
+          game.ship.power(1, 0);
+        });
+        key('up', function () {
+          game.ship.power(0, -1);
+        });
+        key('down', function () {
+          game.ship.power(0, 1);
+        });
+        key('space', function () {
+          game.ship.fireBullet(g);
+        });
+
+        game.start();
+      });
+
+    </script>
+  </head>
   <body>
     <canvas id="space" style="width: 100%; height:100%;"></canvas>
   </body>
