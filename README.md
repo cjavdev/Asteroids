@@ -1,3 +1,3 @@
 # Asteroids
 
-* [Live]: ./index.html
+* [Live](./index.html)
