@@ -1,3 +1,3 @@
 # Asteroids
 
-* [Live](./index.html)
+* [Live](http://cjavilla.com/Asteroids)

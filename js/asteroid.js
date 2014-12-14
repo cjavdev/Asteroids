@@ -261,7 +261,6 @@ $(document).ready(function(){
 		console.log("resizing" + canvas);
 	});
 
-
 	console.log(canvas);
 
 	var g = new Asteroids.Game(context);
@@ -282,7 +281,4 @@ $(document).ready(function(){
 	});
 
 	g.start();
-
 });
-
-
