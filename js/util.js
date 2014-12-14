@@ -2,15 +2,15 @@
 'use strict';
 
 (function () {
-  if(AG === undefined) {
+  if (window.AG === undefined) {
     window.AG = {};
   }
 
-  if(AG.Util === undefined) {
+  if (window.AG.Util === undefined) {
     AG.Util = {};
   }
 
-  AG.Util.randomBetween = function(min, max) {
+  AG.Util.randomBetween = function (min, max) {
     return Math.floor(Math.random() * (max + 1 - min) + min);
   };
 }());
