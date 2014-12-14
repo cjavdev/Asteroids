@@ -14,19 +14,21 @@
       x: 0,
       y: 0
     };
-
-    this.image = new Image();
-
-    if(imgPath === undefined) {
-      this.image.src = "img/spaceship.png";
-    } else {
-      this.image.src = imgPath;
-    }
+    this.installImage(imgPath);
 
     MovingObject.apply(this, arguments);
   };
 
   Ship.inherits(MovingObject);
+
+  Ship.prototype.installImage = function (path) {
+    this.image = new Image();
+    if(path === undefined) {
+      this.image.src = "img/spaceship.png";
+    } else {
+      this.image.src = path;
+    }
+  };
 
   Ship.prototype.draw = function (ctx) {
     ctx.beginPath();
@@ -35,7 +37,7 @@
 
   Ship.prototype.isHit = function (asteroids) {
     var i, distance, xSquared, ySquared;
-    for (i = 1; i < asteroids.length; i++) {
+    for (i = 0; i < asteroids.length; i++) {
       xSquared = Math.pow((asteroids[i].x - this.center().x), 2);
       ySquared = Math.pow((asteroids[i].y - this.center().y), 2);
       distance = Math.sqrt(xSquared + ySquared);

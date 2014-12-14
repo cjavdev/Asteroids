@@ -12,28 +12,25 @@
     <script src="./js/game.js"></script>
 
     <style type="text/css" media="screen">
-      body {
+      body, html {
         background-color: black;
+        padding: 0;
+        margin: 0;
+        min-width: 100%;
+        min-height: 100%;
       }
       canvas {
-        border: 1px dashed white;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        border: 4px dashed white;
       }
     </style>
     <script>
       $(function () {
         var canvas = document.getElementById('space'),
-          context = canvas.getContext("2d");
-
-        canvas.width = $(window).width();
-        canvas.height = $(window).height();
-
-        $(window).resize(function () {
-          canvas.width = $(window).width();
-          canvas.height = $(window).height();
-          console.log("resizing" + canvas);
-        });
-
-        var game = new AG.Game(context);
+          context = canvas.getContext("2d"),
+          game = new AG.Game(context);
 
         key('left', function () {
           game.ship.power(-1, 0);
@@ -53,10 +50,9 @@
 
         game.start();
       });
-
     </script>
   </head>
   <body>
-    <canvas id="space" style="width: 800px; height: 500px;"></canvas>
+    <canvas id="space" height="500" width="800"></canvas>
   </body>
 </html>
