@@ -9,10 +9,11 @@
     <script src="./js/asteroid.js"></script>
     <script src="./js/bullet.js"></script>
     <script src="./js/ship.js"></script>
+    <script src="./js/game.js"></script>
 
     <style type="text/css" media="screen">
       body {
-        background: url('img/star-background.jpg') no-repeat center center fixed;
+        background-color: black;
       }
       canvas {
         border: 1px dashed white;
@@ -32,7 +33,7 @@
           console.log("resizing" + canvas);
         });
 
-        var game = new Asteroids.Game(context);
+        var game = new AG.Game(context);
 
         key('left', function () {
           game.ship.power(-1, 0);
@@ -47,7 +48,7 @@
           game.ship.power(0, 1);
         });
         key('space', function () {
-          game.ship.fireBullet(g);
+          game.ship.fireBullet(game);
         });
 
         game.start();
@@ -56,6 +57,6 @@
     </script>
   </head>
   <body>
-    <canvas id="space" style="width: 100%; height:100%;"></canvas>
+    <canvas id="space" style="width: 800px; height: 500px;"></canvas>
   </body>
 </html>

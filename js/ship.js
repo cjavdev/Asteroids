@@ -18,7 +18,7 @@
     this.image = new Image();
 
     if(imgPath === undefined) {
-      this.image.src = "./spaceship.png";
+      this.image.src = "img/spaceship.png";
     } else {
       this.image.src = imgPath;
     }
@@ -75,7 +75,7 @@
   };
 
   Ship.prototype.fireBullet = function (game) {
-    var bullet new AG.Bullet({
+    var bullet = new AG.Bullet({
       x: this.center().x,
       y: this.center().y
     }, {

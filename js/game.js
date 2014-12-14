@@ -10,16 +10,16 @@
     this.asteroids = [];
     this.bullets = [];
 
-    AG.Util.canvasMaxX = context.canvas.width;
-    AG.Util.canvasMaxY = context.canvas.height;
+    AG.canvasMaxX = context.canvas.width;
+    AG.canvasMaxY = context.canvas.height;
 
-    this.ship = new Ship({
-      x: (canvasMaxX / 2),
-      y: (canvasMaxY / 2)
+    this.ship = new AG.Ship({
+      x: (AG.canvasMaxX / 2),
+      y: (AG.canvasMaxY / 2)
     }, 50, 50);
 
     for (var i = 0; i < 10; i++) {
-      this.asteroids.push(Asteroid.randomAsteroid());
+      this.asteroids.push(AG.Asteroid.randomAsteroid());
     }
   };
 
@@ -36,7 +36,6 @@
   }
 
   Game.prototype.update = function () {
-    console.log(canvasMaxX);
     for (var i = 0; i < this.asteroids.length; i++) {
       if (this.asteroids[i].offScreen()) {
         this.asteroids[i].wrap();
@@ -44,19 +43,19 @@
         var ast = this.asteroids[i];
         console.log(ast);
         if (ast.radius > 10) {
-          this.asteroids.push(new Asteroid({
+          this.asteroids.push(new AG.Asteroid({
             x: ast.x,
             y: ast.y
           }, ast.radius / 2, {
-            x: randomBetween(-10, 10),
-            y: randomBetween(-10, 10)
+            x: AG.Util.randomBetween(-10, 10),
+            y: AG.Util.randomBetween(-10, 10)
           }));
-          this.asteroids.push(new Asteroid({
+          this.asteroids.push(new AG.Asteroid({
             x: ast.x,
             y: ast.y
           }, ast.radius / 2, {
-            x: randomBetween(-10, 10),
-            y: randomBetween(-10, 10)
+            x: AG.Util.randomBetween(-10, 10),
+            y: AG.Util.randomBetween(-10, 10)
           }));
         }
 
@@ -80,7 +79,7 @@
   Game.prototype.start = function () {
     var that = this;
     var timer = setInterval(function () {
-      that.context.clearRect(0, 0, canvasMaxX, canvasMaxY);
+      that.context.clearRect(0, 0, AG.canvasMaxX, AG.canvasMaxY);
       that.update();
       if (that.ship.offScreen()) {
         that.ship.wrap();

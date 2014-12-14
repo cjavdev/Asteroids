@@ -7,10 +7,19 @@
   }
 
   if (window.AG.Util === undefined) {
-    AG.Util = {};
+    AG.Util = {
+      canvasMaxX: 500,
+      canvasMaxY: 500
+    };
   }
 
   AG.Util.randomBetween = function (min, max) {
     return Math.floor(Math.random() * (max + 1 - min) + min);
+  };
+
+  Function.prototype.inherits = function (parent) {
+    var F = function () {};
+    F.prototype = parent.prototype;
+    this.prototype = new F();
   };
 }());

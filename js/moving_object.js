@@ -12,14 +12,14 @@
   };
 
   MovingObject.prototype.wrap = function () {
-    if (this.x > canvasMaxX) {
+    if (this.x > AG.canvasMaxX) {
       this.x = 0;
-    } else if (this.y > canvasMaxY) {
+    } else if (this.y > AG.canvasMaxY) {
       this.y = 0;
     } else if (this.x < 1) {
-      this.x = canvasMaxX;
+      this.x = AG.canvasMaxX;
     } else if (this.y < 1) {
-      this.y = canvasMaxY;
+      this.y = AG.canvasMaxY;
     }
   };
 
@@ -29,6 +29,6 @@
   };
 
   MovingObject.prototype.offScreen = function () {
-    return this.x > canvasMaxX || this.y > canvasMaxY || this.x < 0 || this.y < 0;
+    return this.x > AG.canvasMaxX || this.y > AG.canvasMaxY || this.x < 0 || this.y < 0;
   };
 }());
