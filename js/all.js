@@ -77,7 +77,6 @@
   if (window.AG === undefined) {
     window.AG = {};
   }
-  var MovingObject = AG.MovingObject;
   var Asteroid = function Asteroid(position, radius, direction) {
     this.radius = radius;
     this.direction = direction;
@@ -98,7 +97,7 @@
       }
       return false;
     }
-  }, {}, MovingObject);
+  }, {}, AG.MovingObject);
   Asteroid.randomAsteroid = function() {
     var position = {
       x: Math.floor(Math.random() * AG.canvasMaxX + 1),

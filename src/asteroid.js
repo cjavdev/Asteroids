@@ -6,9 +6,7 @@
     window.AG = {};
   }
 
-  var MovingObject = AG.MovingObject;
-
-  class Asteroid extends MovingObject {
+  class Asteroid extends AG.MovingObject {
     constructor(position, radius, direction) {
       this.radius = radius;
       this.direction = direction;
@@ -33,6 +31,7 @@
       return false;
     }
   }
+
   Asteroid.randomAsteroid = function () {
     var position = {
       x: Math.floor(Math.random() * AG.canvasMaxX + 1),
@@ -44,5 +43,6 @@
     };
     return new Asteroid(position, AG.Util.randomBetween(5, 25), direction);
   };
+
   AG.Asteroid = Asteroid;
 }());

@@ -16,10 +16,4 @@
   AG.Util.randomBetween = function (min, max) {
     return Math.floor(Math.random() * (max + 1 - min) + min);
   };
-
-  Function.prototype.inherits = function (parent) {
-    var F = function () {};
-    F.prototype = parent.prototype;
-    this.prototype = new F();
-  };
 }());
