@@ -82,12 +82,6 @@
         y: this.velocity.y
       }, 3, 2, game);
     }
-
-    wrapIfOffScreen() {
-      if(this.offScreen()) {
-        this.wrap();
-      }
-    }
   }
 
   AG.Ship = Ship;

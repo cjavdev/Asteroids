@@ -26,6 +26,11 @@ var randomBetween = function(min, max) {
         this.y = AG.canvasMaxY;
       }
     },
+    wrapIfOffScreen: function() {
+      if (this.offScreen()) {
+        this.wrap();
+      }
+    },
     update: function(velocity) {
       this.x += velocity.x;
       this.y += velocity.y;
@@ -178,11 +183,6 @@ var randomBetween = function(min, max) {
         x: this.velocity.x,
         y: this.velocity.y
       }, 3, 2, game);
-    },
-    wrapIfOffScreen: function() {
-      if (this.offScreen()) {
-        this.wrap();
-      }
     }
   }, {}, AG.MovingObject);
   AG.Ship = Ship;
@@ -256,39 +256,46 @@ var randomBetween = function(min, max) {
         }
       }
     },
+    trySplitAsteroid: function(asteroid) {
+      if (asteroid.radius > 10) {
+        this.asteroids.push(new AG.Asteroid({
+          x: asteroid.x,
+          y: asteroid.y
+        }, asteroid.radius / 2, {
+          x: randomBetween(-10, 10),
+          y: randomBetween(-10, 10)
+        }));
+        this.asteroids.push(new AG.Asteroid({
+          x: asteroid.x,
+          y: asteroid.y
+        }, asteroid.radius / 2, {
+          x: randomBetween(-10, 10),
+          y: randomBetween(-10, 10)
+        }));
+      }
+    },
     update: function() {
-      for (var i = 0; i < this.asteroids.length; i++) {
-        if (this.asteroids[i].offScreen()) {
-          this.asteroids[i].wrap();
-        } else if (this.asteroids[i].isHit(this.bullets)) {
-          var ast = this.asteroids[i];
-          console.log(ast);
-          if (ast.radius > 10) {
-            this.asteroids.push(new AG.Asteroid({
-              x: ast.x,
-              y: ast.y
-            }, ast.radius / 2, {
-              x: randomBetween(-10, 10),
-              y: randomBetween(-10, 10)
-            }));
-            this.asteroids.push(new AG.Asteroid({
-              x: ast.x,
-              y: ast.y
-            }, ast.radius / 2, {
-              x: randomBetween(-10, 10),
-              y: randomBetween(-10, 10)
-            }));
+      for (var $__2 = this.asteroids[$traceurRuntime.toProperty(Symbol.iterator)](),
+          $__3; !($__3 = $__2.next()).done; ) {
+        var asteroid = $__3.value;
+        {
+          asteroid.wrapIfOffScreen();
+          asteroid.update();
+          if (asteroid.isHit(this.bullets)) {
+            console.log('direct hit!');
+            this.trySplitAsteroid(asteroid);
+            this.asteroids.splice(this.asteroids.indexOf(asteroid), 1);
           }
-          this.asteroids.splice(i, 1);
-        } else {
-          this.asteroids[i].update();
         }
       }
-      for (var i = 0; i < this.bullets.length; i++) {
-        if (this.bullets[i].offScreen()) {
-          this.bullets.splice(i, 1);
-        } else {
-          this.bullets[i].update();
+      for (var $__4 = this.bullets[$traceurRuntime.toProperty(Symbol.iterator)](),
+          $__5; !($__5 = $__4.next()).done; ) {
+        var bullet = $__5.value;
+        {
+          bullet.update();
+          if (bullet.offScreen()) {
+            this.bullets.splice(this.bullets.indexOf(bullet), 1);
+          }
         }
       }
       this.ship.update();

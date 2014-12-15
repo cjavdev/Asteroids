@@ -24,6 +24,12 @@
       }
     }
 
+    wrapIfOffScreen() {
+      if(this.offScreen()) {
+        this.wrap();
+      }
+    }
+
     update(velocity) {
       this.x += velocity.x;
       this.y += velocity.y;

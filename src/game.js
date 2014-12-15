@@ -27,49 +27,49 @@
     draw() {
       this.ship.draw(this.context);
 
-      for(var asteroid of this.asteroids) {
+      for (var asteroid of this.asteroids) {
         asteroid.draw(this.context);
       }
-      for(var bullet of this.bullets) {
+      for (var bullet of this.bullets) {
         bullet.draw(this.context);
       }
     }
 
-    update() {
-      for (var i = 0; i < this.asteroids.length; i++) {
-        if (this.asteroids[i].offScreen()) {
-          this.asteroids[i].wrap();
-        } else if (this.asteroids[i].isHit(this.bullets)) {
-          var ast = this.asteroids[i];
-          console.log(ast);
-          if (ast.radius > 10) {
-            this.asteroids.push(new AG.Asteroid({
-              x: ast.x,
-              y: ast.y
-            }, ast.radius / 2, {
-              x: randomBetween(-10, 10),
-              y: randomBetween(-10, 10)
-            }));
-            this.asteroids.push(new AG.Asteroid({
-              x: ast.x,
-              y: ast.y
-            }, ast.radius / 2, {
-              x: randomBetween(-10, 10),
-              y: randomBetween(-10, 10)
-            }));
-          }
+    trySplitAsteroid(asteroid) {
+      if (asteroid.radius > 10) {
+        this.asteroids.push(new AG.Asteroid({
+          x: asteroid.x,
+          y: asteroid.y
+        }, asteroid.radius / 2, {
+          x: randomBetween(-10, 10),
+          y: randomBetween(-10, 10)
+        }));
+        this.asteroids.push(new AG.Asteroid({
+          x: asteroid.x,
+          y: asteroid.y
+        }, asteroid.radius / 2, {
+          x: randomBetween(-10, 10),
+          y: randomBetween(-10, 10)
+        }));
+      }
+    }
 
-          this.asteroids.splice(i, 1);
-        } else {
-          this.asteroids[i].update();
+    update() {
+      for (var asteroid of this.asteroids) {
+        asteroid.wrapIfOffScreen();
+        asteroid.update();
+
+        if (asteroid.isHit(this.bullets)) {
+          console.log('direct hit!');
+          this.trySplitAsteroid(asteroid);
+          this.asteroids.splice(this.asteroids.indexOf(asteroid), 1);
         }
       }
 
-      for (var i = 0; i < this.bullets.length; i++) {
-        if (this.bullets[i].offScreen()) {
-          this.bullets.splice(i, 1);
-        } else {
-          this.bullets[i].update();
+      for (var bullet of this.bullets) {
+        bullet.update();
+        if (bullet.offScreen()) {
+          this.bullets.splice(this.bullets.indexOf(bullet), 1);
         }
       }
 
