@@ -20,14 +20,11 @@
     }
 
     isHit(bullets) {
-      var i;
-
-      for (i = 0; i < bullets.length; i++) {
-        if(this.colidedWith(bullets[i])) {
+      for(var bullet of bullets) {
+        if(this.colidedWith(bullet)) {
           return true;
         }
       }
-
       return false;
     }
   }

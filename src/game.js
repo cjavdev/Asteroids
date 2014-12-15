@@ -27,12 +27,11 @@
     draw() {
       this.ship.draw(this.context);
 
-      for (var i = 0; i < this.asteroids.length; i++) {
-        this.asteroids[i].draw(this.context);
+      for(var asteroid of this.asteroids) {
+        asteroid.draw(this.context);
       }
-
-      for (var i = 0; i < this.bullets.length; i++) {
-        this.bullets[i].draw(this.context);
+      for(var bullet of this.bullets) {
+        bullet.draw(this.context);
       }
     }
 
@@ -78,18 +77,17 @@
     }
 
     start() {
-      var that = this;
-      var timer = setInterval(function () {
-        that.context.clearRect(0, 0, AG.canvasMaxX, AG.canvasMaxY);
-        that.update();
-        if (that.ship.offScreen()) {
-          that.ship.wrap();
-        }
-        if (that.ship.isHit(that.asteroids)) {
+      var timer = setInterval(() => {
+        this.context.clearRect(0, 0, AG.canvasMaxX, AG.canvasMaxY);
+        this.update();
+        this.ship.wrapIfOffScreen();
+
+        if (this.ship.isHit(this.asteroids)) {
           alert("BOOM!");
           clearInterval(timer);
         }
-        that.draw();
+
+        this.draw();
       }, 100);
     }
   }

@@ -18,14 +18,12 @@
     }
 
     update() {
-      var x = this.direction.x;
-      var y = this.direction.y;
+      var [x, y] = [this.direction.x, this.direction.y];
 
       while (x === 0 && y === 0) {
         this.direction.y = Math.floor(Math.random() * (2 + 1) - 1);
         this.direction.x = Math.floor(Math.random() * (2 + 1) - 1);
-        x = this.direction.x;
-        y = this.direction.y;
+        [x, y] = [this.direction.x, this.direction.y];
       }
 
       this.x += x * this.speed;

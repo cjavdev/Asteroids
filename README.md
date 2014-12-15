@@ -7,4 +7,6 @@
 +  `class`
 +  `extends`
 +  `super`
-
++  `for of`
++  Destructuring Assignment
++  `=> function`

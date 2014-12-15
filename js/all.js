@@ -84,10 +84,13 @@
       $traceurRuntime.superGet(this, $Asteroid.prototype, "update").call(this, this.direction);
     },
     isHit: function(bullets) {
-      var i;
-      for (i = 0; i < bullets.length; i++) {
-        if (this.colidedWith(bullets[i])) {
-          return true;
+      for (var $__1 = bullets[$traceurRuntime.toProperty(Symbol.iterator)](),
+          $__2; !($__2 = $__1.next()).done; ) {
+        var bullet = $__2.value;
+        {
+          if (this.colidedWith(bullet)) {
+            return true;
+          }
         }
       }
       return false;
@@ -183,6 +186,11 @@
         x: this.velocity.x,
         y: this.velocity.y
       }, 3, 2, game);
+    },
+    wrapIfOffScreen: function() {
+      if (this.offScreen()) {
+        this.wrap();
+      }
     }
   }, {}, AG.MovingObject);
   AG.Ship = Ship;
@@ -204,13 +212,14 @@
   };
   var $Bullet = Bullet;
   ($traceurRuntime.createClass)(Bullet, {update: function() {
-      var x = this.direction.x;
-      var y = this.direction.y;
+      var $__2;
+      var $__1 = [this.direction.x, this.direction.y],
+          x = $__1[0],
+          y = $__1[1];
       while (x === 0 && y === 0) {
         this.direction.y = Math.floor(Math.random() * (2 + 1) - 1);
         this.direction.x = Math.floor(Math.random() * (2 + 1) - 1);
-        x = this.direction.x;
-        y = this.direction.y;
+        ($__2 = [this.direction.x, this.direction.y], x = $__2[0], y = $__2[1], $__2);
       }
       this.x += x * this.speed;
       this.y += y * this.speed;
@@ -240,11 +249,19 @@
   ($traceurRuntime.createClass)(Game, {
     draw: function() {
       this.ship.draw(this.context);
-      for (var i = 0; i < this.asteroids.length; i++) {
-        this.asteroids[i].draw(this.context);
+      for (var $__2 = this.asteroids[$traceurRuntime.toProperty(Symbol.iterator)](),
+          $__3; !($__3 = $__2.next()).done; ) {
+        var asteroid = $__3.value;
+        {
+          asteroid.draw(this.context);
+        }
       }
-      for (var i = 0; i < this.bullets.length; i++) {
-        this.bullets[i].draw(this.context);
+      for (var $__4 = this.bullets[$traceurRuntime.toProperty(Symbol.iterator)](),
+          $__5; !($__5 = $__4.next()).done; ) {
+        var bullet = $__5.value;
+        {
+          bullet.draw(this.context);
+        }
       }
     },
     update: function() {
@@ -285,19 +302,17 @@
       this.ship.update();
     },
     start: function() {
-      var that = this;
-      var timer = setInterval(function() {
-        that.context.clearRect(0, 0, AG.canvasMaxX, AG.canvasMaxY);
-        that.update();
-        if (that.ship.offScreen()) {
-          that.ship.wrap();
-        }
-        if (that.ship.isHit(that.asteroids)) {
+      var $__0 = this;
+      var timer = setInterval((function() {
+        $__0.context.clearRect(0, 0, AG.canvasMaxX, AG.canvasMaxY);
+        $__0.update();
+        $__0.ship.wrapIfOffScreen();
+        if ($__0.ship.isHit($__0.asteroids)) {
           alert("BOOM!");
           clearInterval(timer);
         }
-        that.draw();
-      }, 100);
+        $__0.draw();
+      }), 100);
     }
   }, {});
   AG.Game = Game;
