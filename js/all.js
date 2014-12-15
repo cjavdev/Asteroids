@@ -26,46 +26,49 @@
   if (window.AG === undefined) {
     window.AG = {};
   }
-  var MovingObject = AG.MovingObject = function(position) {
+  var MovingObject = function MovingObject(position) {
     this.x = position.x;
     this.y = position.y;
   };
-  MovingObject.prototype.wrap = function() {
-    if (this.x > AG.canvasMaxX) {
-      this.x = 0;
-    } else if (this.y > AG.canvasMaxY) {
-      this.y = 0;
-    } else if (this.x < 1) {
-      this.x = AG.canvasMaxX;
-    } else if (this.y < 1) {
-      this.y = AG.canvasMaxY;
+  ($traceurRuntime.createClass)(MovingObject, {
+    wrap: function() {
+      if (this.x > AG.canvasMaxX) {
+        this.x = 0;
+      } else if (this.y > AG.canvasMaxY) {
+        this.y = 0;
+      } else if (this.x < 1) {
+        this.x = AG.canvasMaxX;
+      } else if (this.y < 1) {
+        this.y = AG.canvasMaxY;
+      }
+    },
+    update: function(velocity) {
+      this.x += velocity.x;
+      this.y += velocity.y;
+    },
+    offScreen: function() {
+      return this.x > AG.canvasMaxX || this.y > AG.canvasMaxY || this.x < 0 || this.y < 0;
+    },
+    draw: function(ctx) {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+    },
+    colidedWith: function(other) {
+      var distance,
+          xSquared,
+          ySquared;
+      xSquared = Math.pow((other.x - this.x), 2);
+      ySquared = Math.pow((other.y - this.y), 2);
+      distance = Math.sqrt(xSquared + ySquared);
+      if (distance < (other.radius + this.radius)) {
+        return true;
+      }
+      return false;
     }
-  };
-  MovingObject.prototype.update = function(velocity) {
-    this.x += velocity.x;
-    this.y += velocity.y;
-  };
-  MovingObject.prototype.offScreen = function() {
-    return this.x > AG.canvasMaxX || this.y > AG.canvasMaxY || this.x < 0 || this.y < 0;
-  };
-  MovingObject.prototype.draw = function(ctx) {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-    ctx.fillStyle = this.color;
-    ctx.fill();
-  };
-  MovingObject.prototype.colidedWith = function(other) {
-    var distance,
-        xSquared,
-        ySquared;
-    xSquared = Math.pow((other.x - this.x), 2);
-    ySquared = Math.pow((other.y - this.y), 2);
-    distance = Math.sqrt(xSquared + ySquared);
-    if (distance < (other.radius + this.radius)) {
-      return true;
-    }
-    return false;
-  };
+  }, {});
+  AG.MovingObject = MovingObject;
 }());
 
 "use strict";
@@ -75,13 +78,27 @@
     window.AG = {};
   }
   var MovingObject = AG.MovingObject;
-  var Asteroid = AG.Asteroid = function(position, radius, direction) {
+  var Asteroid = function Asteroid(position, radius, direction) {
     this.radius = radius;
     this.direction = direction;
     this.color = "grey";
-    MovingObject.apply(this, arguments);
+    $traceurRuntime.superConstructor($Asteroid).call(this, position, radius, direction);
   };
-  Asteroid.inherits(MovingObject);
+  var $Asteroid = Asteroid;
+  ($traceurRuntime.createClass)(Asteroid, {
+    update: function() {
+      $traceurRuntime.superGet(this, $Asteroid.prototype, "update").call(this, this.direction);
+    },
+    isHit: function(bullets) {
+      var i;
+      for (i = 0; i < bullets.length; i++) {
+        if (this.colidedWith(bullets[i])) {
+          return true;
+        }
+      }
+      return false;
+    }
+  }, {}, MovingObject);
   Asteroid.randomAsteroid = function() {
     var position = {
       x: Math.floor(Math.random() * AG.canvasMaxX + 1),
@@ -93,18 +110,7 @@
     };
     return new Asteroid(position, AG.Util.randomBetween(5, 25), direction);
   };
-  Asteroid.prototype.update = function() {
-    MovingObject.prototype.update.call(this, this.direction);
-  };
-  Asteroid.prototype.isHit = function(bullets) {
-    var i;
-    for (i = 0; i < bullets.length; i++) {
-      if (this.colidedWith(bullets[i])) {
-        return true;
-      }
-    }
-    return false;
-  };
+  AG.Asteroid = Asteroid;
 }());
 
 "use strict";

@@ -1,20 +1,28 @@
-var gulp = require('gulp');
-var sourcemaps = require('gulp-sourcemaps');
-var traceur = require('gulp-traceur');
-var concat = require('gulp-concat');
+var gulp = require('gulp'),
+  sourcemaps = require('gulp-sourcemaps'),
+  traceur = require('gulp-traceur'),
+  concat = require('gulp-concat'),
+  watch = require('gulp-watch');
 
-gulp.task('default', function () {
-  return gulp.src([
-      'src/util.js',
-      'src/moving_object.js',
-      'src/asteroid.js',
-      'src/ship.js',
-      'src/bullet.js',
-      'src/game.js'
-    ])
+var paths = {};
+paths.scripts = [
+  'src/util.js',
+  'src/moving_object.js',
+  'src/asteroid.js',
+  'src/ship.js',
+  'src/bullet.js',
+  'src/game.js'
+];
+
+gulp.task('scripts', function () {
+  return gulp.src(paths.scripts)
     .pipe(sourcemaps.init())
     .pipe(traceur())
     .pipe(concat('all.js'))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('js'));
+});
+
+gulp.task('watch', function () {
+  gulp.watch(paths.scripts, ['scripts']);
 });

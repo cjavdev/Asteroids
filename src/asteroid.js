@@ -7,16 +7,32 @@
   }
 
   var MovingObject = AG.MovingObject;
-  var Asteroid = AG.Asteroid = function (position, radius, direction) {
-    this.radius = radius;
-    this.direction = direction;
-    this.color = "grey";
 
-    MovingObject.apply(this, arguments);
-  };
+  class Asteroid extends MovingObject {
+    constructor(position, radius, direction) {
+      this.radius = radius;
+      this.direction = direction;
+      this.color = "grey";
 
-  Asteroid.inherits(MovingObject);
+      super(position, radius, direction);
+    }
 
+    update () {
+      super.update(this.direction);
+    }
+
+    isHit(bullets) {
+      var i;
+
+      for (i = 0; i < bullets.length; i++) {
+        if(this.colidedWith(bullets[i])) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+  }
   Asteroid.randomAsteroid = function () {
     var position = {
       x: Math.floor(Math.random() * AG.canvasMaxX + 1),
@@ -28,20 +44,5 @@
     };
     return new Asteroid(position, AG.Util.randomBetween(5, 25), direction);
   };
-
-  Asteroid.prototype.update = function () {
-    MovingObject.prototype.update.call(this, this.direction);
-  };
-
-  Asteroid.prototype.isHit = function (bullets) {
-    var i;
-
-    for (i = 0; i < bullets.length; i++) {
-      if(this.colidedWith(bullets[i])) {
-        return true;
-      }
-    }
-
-    return false;
-  };
+  AG.Asteroid = Asteroid;
 }());
