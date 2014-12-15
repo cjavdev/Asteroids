@@ -1,19 +1,8 @@
 "use strict";
 'use strict';
-(function() {
-  if (window.AG === undefined) {
-    window.AG = {};
-  }
-  if (window.AG.Util === undefined) {
-    AG.Util = {
-      canvasMaxX: 500,
-      canvasMaxY: 500
-    };
-  }
-  AG.Util.randomBetween = function(min, max) {
-    return Math.floor(Math.random() * (max + 1 - min) + min);
-  };
-}());
+var randomBetween = function(min, max) {
+  return Math.floor(Math.random() * (max + 1 - min) + min);
+};
 
 "use strict";
 'use strict';
@@ -102,10 +91,10 @@
       y: Math.floor(Math.random() * AG.canvasMaxX + 1)
     };
     var direction = {
-      x: AG.Util.randomBetween(-10, 10),
-      y: AG.Util.randomBetween(-10, 10)
+      x: randomBetween(-10, 10),
+      y: randomBetween(-10, 10)
     };
-    return new Asteroid(position, AG.Util.randomBetween(5, 25), direction);
+    return new Asteroid(position, randomBetween(5, 25), direction);
   };
   AG.Asteroid = Asteroid;
 }());
@@ -146,16 +135,19 @@
       }
     },
     isHit: function(asteroids) {
-      var i,
-          distance,
+      var distance,
           xSquared,
           ySquared;
-      for (i = 0; i < asteroids.length; i++) {
-        xSquared = Math.pow((asteroids[i].x - this.center().x), 2);
-        ySquared = Math.pow((asteroids[i].y - this.center().y), 2);
-        distance = Math.sqrt(xSquared + ySquared);
-        if (distance < (asteroids[i].radius + this.height / 2)) {
-          return true;
+      for (var $__1 = asteroids[$traceurRuntime.toProperty(Symbol.iterator)](),
+          $__2; !($__2 = $__1.next()).done; ) {
+        var asteroid = $__2.value;
+        {
+          xSquared = Math.pow((asteroid.x - this.center().x), 2);
+          ySquared = Math.pow((asteroid.y - this.center().y), 2);
+          distance = Math.sqrt(xSquared + ySquared);
+          if (distance < (asteroid.radius + this.height / 2)) {
+            return true;
+          }
         }
       }
       return false;
@@ -276,15 +268,15 @@
               x: ast.x,
               y: ast.y
             }, ast.radius / 2, {
-              x: AG.Util.randomBetween(-10, 10),
-              y: AG.Util.randomBetween(-10, 10)
+              x: randomBetween(-10, 10),
+              y: randomBetween(-10, 10)
             }));
             this.asteroids.push(new AG.Asteroid({
               x: ast.x,
               y: ast.y
             }, ast.radius / 2, {
-              x: AG.Util.randomBetween(-10, 10),
-              y: AG.Util.randomBetween(-10, 10)
+              x: randomBetween(-10, 10),
+              y: randomBetween(-10, 10)
             }));
           }
           this.asteroids.splice(i, 1);

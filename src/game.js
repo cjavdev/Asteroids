@@ -47,15 +47,15 @@
               x: ast.x,
               y: ast.y
             }, ast.radius / 2, {
-              x: AG.Util.randomBetween(-10, 10),
-              y: AG.Util.randomBetween(-10, 10)
+              x: randomBetween(-10, 10),
+              y: randomBetween(-10, 10)
             }));
             this.asteroids.push(new AG.Asteroid({
               x: ast.x,
               y: ast.y
             }, ast.radius / 2, {
-              x: AG.Util.randomBetween(-10, 10),
-              y: AG.Util.randomBetween(-10, 10)
+              x: randomBetween(-10, 10),
+              y: randomBetween(-10, 10)
             }));
           }
 

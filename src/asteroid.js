@@ -35,10 +35,10 @@
       y: Math.floor(Math.random() * AG.canvasMaxX + 1),
     };
     var direction = {
-      x: AG.Util.randomBetween(-10, 10),
-      y: AG.Util.randomBetween(-10, 10)
+      x: randomBetween(-10, 10),
+      y: randomBetween(-10, 10)
     };
-    return new Asteroid(position, AG.Util.randomBetween(5, 25), direction);
+    return new Asteroid(position, randomBetween(5, 25), direction);
   };
 
   AG.Asteroid = Asteroid;

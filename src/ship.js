@@ -40,12 +40,12 @@
     }
 
     isHit(asteroids) {
-      var i, distance, xSquared, ySquared;
-      for (i = 0; i < asteroids.length; i++) {
-        xSquared = Math.pow((asteroids[i].x - this.center().x), 2);
-        ySquared = Math.pow((asteroids[i].y - this.center().y), 2);
+      var distance, xSquared, ySquared;
+      for(var asteroid of asteroids) {
+        xSquared = Math.pow((asteroid.x - this.center().x), 2);
+        ySquared = Math.pow((asteroid.y - this.center().y), 2);
         distance = Math.sqrt(xSquared + ySquared);
-        if (distance < (asteroids[i].radius + this.height / 2)) {
+        if (distance < (asteroid.radius + this.height / 2)) {
           return true;
         }
       }
