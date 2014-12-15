@@ -5,7 +5,7 @@
     window.AG = {};
   }
 
-  class Ship extends MovingObject {
+  class Ship extends AG.MovingObject {
     constructor(position, height, width, imgPath) {
       this.height = height;
       this.width = width;
@@ -15,7 +15,19 @@
       };
       this.installImage(imgPath);
 
-      super(position, height, width, imgPath);
+      super(position);
+    }
+
+    center() {
+      return {
+        x: (this.x + this.height / 2),
+        y: (this.y + this.width / 2)
+      };
+    }
+
+    draw(ctx) {
+      ctx.beginPath();
+      ctx.drawImage(this.image, this.x, this.y, this.height, this.width);
     }
 
     installImage(path) {
@@ -25,11 +37,6 @@
       } else {
         this.image.src = path;
       }
-    }
-
-    draw(ctx) {
-      ctx.beginPath();
-      ctx.drawImage(this.image, this.x, this.y, this.height, this.width);
     }
 
     isHit(asteroids) {
@@ -44,13 +51,6 @@
       }
       return false;
     }
-
-    center() {
-      return {
-        x: (this.x + this.height / 2),
-        y: (this.y + this.width / 2)
-      };
-    };
 
     update() {
       this.x += this.velocity.x;

@@ -10,9 +10,9 @@
     constructor(position, radius, direction) {
       this.radius = radius;
       this.direction = direction;
-      this.color = "grey";
+      this.color = 'grey';
 
-      super(position, radius, direction);
+      super(position);
     }
 
     update () {

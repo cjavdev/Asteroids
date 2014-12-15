@@ -11,10 +11,10 @@
       this.direction = direction;
       this.speed = speed;
       this.radius = radius;
-      this.color = "red";
+      this.color = 'red';
 
       game.bullets.push(this);
-      super(position, direction, speed, radius, game);
+      super(position);
     }
 
     update() {
