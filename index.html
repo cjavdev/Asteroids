@@ -9,6 +9,7 @@
     </script>
     <script src="./js/jquery-1.9.1.js"></script>
     <script src="./js/keymaster.js"></script>
+    <script src="./js/util.js"></script>
     <script src="./js/all.js"></script>
 
     <style type="text/css" media="screen">
@@ -26,33 +27,13 @@
         border: 4px dashed white;
       }
     </style>
-    <script>
-      $(function () {
-        var canvas = document.getElementById('space'),
-          context = canvas.getContext("2d"),
-          game = new AG.Game(context);
-
-        key('left', function () {
-          game.ship.power(-1, 0);
-        });
-        key('right', function () {
-          game.ship.power(1, 0);
-        });
-        key('up', function () {
-          game.ship.power(0, -1);
-        });
-        key('down', function () {
-          game.ship.power(0, 1);
-        });
-        key('space', function () {
-          game.ship.fireBullet(game);
-        });
-
-        game.start();
-      });
-    </script>
   </head>
   <body>
     <canvas id="space" height="500" width="800"></canvas>
+    <a href="https://github.com/w1zeman1p/Asteroids/fork"><img style="position: absolute;
+      top: 0; right: 0; border: 0;"
+      src="https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67"
+      alt="Fork me on GitHub"
+      data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
   </body>
 </html>

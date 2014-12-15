@@ -3,6 +3,7 @@ var gulp = require('gulp'),
   traceur = require('gulp-traceur'),
   concat = require('gulp-concat'),
   watch = require('gulp-watch');
+var gulpTraceurCmdline = require('gulp-traceur-cmdline');
 
 var paths = {};
 paths.scripts = [
@@ -11,13 +12,14 @@ paths.scripts = [
   'src/asteroid.js',
   'src/ship.js',
   'src/bullet.js',
-  'src/game.js'
+  'src/game.js',
+  'src/game_ui.js'
 ];
 
 gulp.task('scripts', function () {
   return gulp.src(paths.scripts)
     .pipe(sourcemaps.init())
-    .pipe(traceur())
+    .pipe(traceur({ modules: 'amd' }))
     .pipe(concat('all.js'))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('js'));
